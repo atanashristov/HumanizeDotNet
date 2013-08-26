@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D177BD26-C0B1-4031-B5AA-E0505818A037}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{80867837-2DF7-4C03-A696-AD60D2EB8EA5}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HumanizeDotNet.Tests</RootNamespace>
-    <AssemblyName>HumanizeDotNet.Tests</AssemblyName>
+    <RootNamespace>HumanizeDotNet.Resources</RootNamespace>
+    <AssemblyName>HumanizeDotNet.Resources</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,13 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\Refs\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Refs\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,25 +39,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseHumanizeTests.cs" />
-    <Compile Include="HumanizeTests_bg_BG.cs" />
-    <Compile Include="HumanizeTests_de_DE.cs" />
-    <Compile Include="HumanizeTests_en_US.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="HumanizeResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HumanizeResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HumanizeDotNet.Resources\HumanizeDotNet.Resources.csproj">
-      <Project>{80867837-2df7-4c03-a696-ad60d2eb8ea5}</Project>
-      <Name>HumanizeDotNet.Resources</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HumanizeDotNet\HumanizeDotNet.csproj">
-      <Project>{d1e6b160-63a8-4d61-9afc-198cf41153e2}</Project>
-      <Name>HumanizeDotNet</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="HumanizeResources.bg-BG.resx">
+      <LastGenOutput>HumanizeResources.de-DE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HumanizeResources.de-DE.resx">
+      <LastGenOutput>HumanizeResources.de-DE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HumanizeResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HumanizeResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

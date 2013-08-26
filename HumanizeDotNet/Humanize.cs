@@ -1,8 +1,9 @@
-﻿using System;
+﻿using HumanizeDotNet.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace HumanizeDotNet
 {
@@ -16,6 +17,39 @@ namespace HumanizeDotNet
         public virtual DateTime Now
         {
             get { return DateTime.Now; }
+        }
+    }
+
+    public static class HumanizeExtensionMethods
+    {
+        public static string Ordinal(this double number)
+        {
+            return new Humanize().Ordinal(number);
+        }
+
+        public static string IntWord(this double number)
+        {
+            return new Humanize().IntWord(number);
+        }
+
+        public static string APNumber(this double value)
+        {
+            return new Humanize().APNumber(value);
+        }
+
+        public static string NaturalDay(this DateTime dt)
+        {
+            return new Humanize().NaturalDay(dt);
+        }
+
+        public static string NaturalTime(this DateTime dt)
+        {
+            return new Humanize().NaturalTime(dt);
+        }
+
+        public static string NaturalDayOrTime(this DateTime dt, int h2d)
+        {
+            return new Humanize().NaturalDayOrTime(dt, h2d);
         }
     }
 
@@ -40,7 +74,18 @@ namespace HumanizeDotNet
         /// <returns></returns>
         public string Ordinal(double number)
         {
-            string[] suffixes = {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
+            string[] suffixes = {
+                                    HumanizeResources.th, 
+                                    HumanizeResources.st, 
+                                    HumanizeResources.nd, 
+                                    HumanizeResources.rd, 
+                                    HumanizeResources.th, 
+                                    HumanizeResources.th, 
+                                    HumanizeResources.th, 
+                                    HumanizeResources.th, 
+                                    HumanizeResources.th, 
+                                    HumanizeResources.th
+                                };
 
             if (new double[] { 11, 12, 13 }.Contains(number % 100))
                 return string.Format("{0}{1}", number, suffixes[0]);
@@ -62,17 +107,17 @@ namespace HumanizeDotNet
 
             var convs = new Dictionary<int, string>
                 {
-                    {6, "million"},
-                    {9, "billion"},
-                    {12, "trillion"},
-                    {15, "quadrillion"},
-                    {18, "quintillion"},
-                    {21, "sextillion"},
-                    {24, "septillion"},
-                    {27, "octillion"},
-                    {30, "nonillion"},
-                    {33, "decillion"},
-                    {100, "googol"},
+                    {6, HumanizeResources.million},
+                    {9, HumanizeResources.billion},
+                    {12, HumanizeResources.trillion},
+                    {15, HumanizeResources.quadrillion},
+                    {18, HumanizeResources.quintillion},
+                    {21, HumanizeResources.sextillion},
+                    {24, HumanizeResources.septillion},
+                    {27, HumanizeResources.octillion},
+                    {30, HumanizeResources.nonillion},
+                    {33, HumanizeResources.decillion},
+                    {100, HumanizeResources.googol},
                 };
 
             foreach (var conv in convs)
@@ -99,7 +144,17 @@ namespace HumanizeDotNet
             var number = Math.Round(value, 0);
 
             if (number > 0 && number < 10)
-                return new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }[(int)number - 1].ToString();
+                return new string[] { 
+                    HumanizeResources.one, 
+                    HumanizeResources.two, 
+                    HumanizeResources.three, 
+                    HumanizeResources.four, 
+                    HumanizeResources.five, 
+                    HumanizeResources.six, 
+                    HumanizeResources.seven, 
+                    HumanizeResources.eight, 
+                    HumanizeResources.nine 
+                }[(int)number - 1].ToString();
             else
                 return value.ToString();
         }
@@ -113,16 +168,16 @@ namespace HumanizeDotNet
         public string NaturalDay(DateTime dt)
         {
             DateTime now = TimeMachine.Now;
-            TimeSpan ts = dt - now;
+            TimeSpan ts = dt.Date - now.Date;
 
             if (ts.TotalDays == -1)
-                return "yesterday";
+                return HumanizeResources.yesterday;
             if (ts.TotalDays == 1)
-                return "tomorrow";
+                return HumanizeResources.tomorrow;
             if (ts.TotalDays == 0)
-                return "today";
+                return HumanizeResources.today;
 
-            return dt.ToShortDateString();
+            return dt.ToString("d", Thread.CurrentThread.CurrentUICulture.DateTimeFormat);
         }
 
         /// <summary>
@@ -141,32 +196,32 @@ namespace HumanizeDotNet
                 if (delta.Days > 0)
                 {
                     return delta.Days == 1
-                        ? "1 day ago"
-                        : string.Format("{0} days ago", delta.Days);
+                        ? HumanizeResources.one_day_ago
+                        : string.Format(HumanizeResources.n_days_ago, delta.Days);
                 }
                 else if (delta.Hours > 0)
                 {
                     return (delta.Hours == 1)
-                        ? "an hour ago"
-                        : string.Format("{0} hours ago", delta.Hours);
+                        ? HumanizeResources.an_hour_ago
+                        : string.Format(HumanizeResources.n_hours_ago, delta.Hours);
                 }
                 else if (delta.Minutes != 0)
                 {
                     return delta.Minutes == 1
-                        ? "a minute ago"
-                        : String.Format("{0} minutes ago", delta.Minutes);
+                        ? HumanizeResources.a_minute_ago
+                        : String.Format(HumanizeResources.n_minutes_ago, delta.Minutes);
                 }
                 else
                 {
                     if (delta.Seconds == 0)
                     {
-                        return "now";
+                        return HumanizeResources.now;
                     }
                     else
                     {
                         return delta.Seconds == 1
-                            ? "a second ago"
-                            : string.Format("{0} seconds ago", delta.Seconds);
+                            ? HumanizeResources.a_second_ago
+                            : string.Format(HumanizeResources.n_seconds_ago, delta.Seconds);
                     }
                 }
             }
@@ -177,36 +232,55 @@ namespace HumanizeDotNet
                 if (delta.Days > 0)
                 {
                     return delta.Days == 1
-                        ? "1 day from now"
-                        : string.Format("{0} days from now", delta.Days);
+                        ? HumanizeResources.one_day_from_now
+                        : string.Format(HumanizeResources.n_days_from_now, delta.Days);
                 }
                 else if (delta.Hours > 0)
                 {
                     return (delta.Hours == 1)
-                        ? "an hour from now"
-                        : string.Format("{0} hours from now", delta.Hours);
+                        ? HumanizeResources.an_hour_from_now
+                        : string.Format(HumanizeResources.n_hours_from_now, delta.Hours);
                 }
                 else if (delta.Minutes != 0)
                 {
                     return delta.Minutes == 1
-                        ? "a minute from now"
-                        : String.Format("{0} minutes from now", delta.Minutes);
+                        ? HumanizeResources.a_minute_from_now
+                        : String.Format(HumanizeResources.n_minutes_from_now, delta.Minutes);
                 }
                 else
                 {
                     if (delta.Seconds == 0)
                     {
-                        return "now";
+                        return HumanizeResources.now;
                     }
                     else
                     {
                         return delta.Seconds == 1
-                            ? "a second from now"
-                            : string.Format("{0} seconds from now", delta.Seconds);
+                            ? HumanizeResources.a_second_from_now
+                            : string.Format(HumanizeResources.n_seconds_from_now, delta.Seconds);
                     }
                 }
 
             }
         }
+
+        /// <summary>
+        /// For date and time values shows how many seconds, minutes or hours ago.
+        /// compared to current timestamp returns representing string.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="h2d">Delta hours from to switch from NaturalTime() to NaturalDay().</param>
+        /// <returns></returns>
+        public string NaturalDayOrTime(DateTime dt, int h2d)
+        {
+            var now = TimeMachine.Now;
+            var delta = now - dt;
+
+            if (Math.Abs(delta.TotalHours) <= Math.Abs(h2d))
+                return NaturalTime(dt);
+            else
+                return NaturalDay(dt);
+        }
+
     }
 }
