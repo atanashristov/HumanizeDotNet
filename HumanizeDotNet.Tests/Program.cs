@@ -17,8 +17,13 @@ namespace HumanizeDotNet.Tests
             tests.TestAPNumber();
             tests.TestNaturalDayOrTime();
 
-            Console.WriteLine("<Enter>");
-            Console.ReadLine();
+            Console.WriteLine("OK.");
+
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                Console.WriteLine("Press <Enter> to close.");
+                Console.ReadLine();
+            }
         }
 
 

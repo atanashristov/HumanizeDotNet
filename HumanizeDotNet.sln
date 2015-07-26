@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanizeDotNet", "HumanizeDotNet\HumanizeDotNet.csproj", "{D1E6B160-63A8-4D61-9AFC-198CF41153E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanizeDotNet.Tests", "HumanizeDotNet.Tests\HumanizeDotNet.Tests.csproj", "{D177BD26-C0B1-4031-B5AA-E0505818A037}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanizeDotNet.Resources", "HumanizeDotNet.Resources\HumanizeDotNet.Resources.csproj", "{80867837-2DF7-4C03-A696-AD60D2EB8EA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{97242CC9-586E-4FC0-A566-2156FD946443}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		VersionInfo.cs = VersionInfo.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
